@@ -1,0 +1,182 @@
+/*bootstrap CSS*/
+
+body {
+  padding-top: 50px;
+  font-family: sans-serif;
+  color: black;
+  background: white;
+}
+
+form {
+  font-size: 12px
+
+}
+
+.input-group {
+	relative: ;
+}
+
+img {
+	padding: 2px;
+  border-style: solid;
+
+}
+
+#introduction {
+  padding-top: 150px
+}
+
+
+
+#spacing-row {
+  height: 50px;
+}
+
+#padding-div {
+  height: 35px
+}
+
+.edit-logo-btn {
+  padding-top: 5px
+}
+
+.image-div {
+  padding: 5px;
+}
+
+.button {
+  padding-bottom: 5px;
+}
+
+div {
+  border-style: none;
+}
+
+.thumbnail:hover {
+  background-color: rgba(204,204,204,.85);
+
+}
+
+.thumbnail {
+  display: inline-flex;
+  height: 542px}
+
+#sequence-data {
+  height: 300px
+}
+
+option {
+  font-size: 12px
+}
+h1 {
+  padding: 35px
+}
+
+table: {
+  cell-padding: 5;
+}
+
+
+
+
+/*original WebLogo CSS*//
+
+a:link { color: #369; background: transparent }
+a:visited { color: #066; background: transparent }
+a:active { color: #C00; background: transparent }
+
+a.selected:visited { 
+  color: #000;
+  background: #EEE;
+  text-decoration: none;
+}
+
+
+
+
+th, td { /* ns 4 */
+  font-family: sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 { text-align: left }
+h1  { color: #900 }
+h1 { text-align: left ;
+    padding-top: 50px}
+h1 { font: 170% sans-serif}
+h2 { font: bold 140% sans-serif }
+h3 { font: bold 120% sans-serif }
+h4 { font: bold 100% sans-serif;
+padding-top: 15px }
+h5 { font: italic 100% sans-serif }
+h6 { font: small-caps 100% sans-serif }
+
+h2 { margin-top: 2em}
+h4 { margin-bottom: 0.2em}
+
+.discourse {
+    font-size: small
+    }
+
+
+p {text-align: justify; margin-top: 0em}
+p.copyright { font-size: small; text-align: center }
+
+pre { margin-left: 2em ; }
+
+dt, dd { margin-top: 0; margin-bottom: 0 } /* opera 3.50 */
+dt { font-weight: bold }
+
+/* navigator 4 requires this */
+pre, code { 
+            font-family: monospace ; 
+          
+} 
+
+
+/*fluidbox css*/
+.fluidbox {
+  outline: none;
+}
+.hidden {
+  display: none;
+}
+.fluidbox-overlay {
+  background-color: rgba(204,204,204,.85);
+  cursor: pointer;
+  cursor: -webkit-zoom-out;
+  cursor: -moz-zoom-out;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  transition: all .25s ease-in-out;
+}
+.fluidbox-wrap {
+  background-position: center center;
+  background-size: cover;
+  margin: 0 auto;
+  position: relative;
+  transition: all .25s ease-in-out;
+}
+.fluidbox-ghost {
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  transition: all .25s ease-in-out;
+}
+.fluidbox-closed .fluidbox-ghost {
+  -webkit-transition-property: top, left, opacity, -webkit-transform;
+  -moz-transition-property: top, left, opacity, -moz-transform;
+  -o-transition-property: top, left, opacity, -o-transform;
+  transition-property: top, left, opacity, transform;
+  transition-delay: 0, 0, .25s, 0;
+}
+.fluidbox-closed .fluidbox-wrap img {
+  transition-property: opacity;
+  transition-delay: .25s;
+  transition-duration: 0s;
+}
+
+

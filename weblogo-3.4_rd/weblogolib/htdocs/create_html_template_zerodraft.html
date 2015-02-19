@@ -1,0 +1,607 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>WebLogo 3 - Create </title>
+		<meta name="author" content="Gavin E. Crooks" >
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+		<link rel="stylesheet" type="text/css" href="logo.css" >
+		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+		<!--Dropbox APIs-->
+
+		<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="iincngjgmknhfxs"> 
+
+		//API chooses file from dropbox</script>
+
+		<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="iincngjgmknhfxs">
+		//API saves files to User's dropbox
+		</script>
+
+
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+		<!--bootstrap styled button for file upload-->
+
+		<script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
+	</head>
+
+
+
+<body>
+	<!--Navigation-->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Web Logo 3</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">home</a></li>
+            <li class="active"gg><a href="create_html_template.html">create</a></li>
+            <li><a href="examples.html">examples</a></li> 
+            <li><a href="manual.html">manual</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+  	</div> <!--end Navigation-->
+
+	<div class="container-fluid"> <!--Outer Body Container Start-->
+		<form enctype="multipart/form-data" action="create.cgi" name="logoform" method="post">
+			<div class="row" id="create-title">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8"><h1> WebLogo 3: Create</h1>
+				<div class="col-sm-2"></div>
+			</div>
+
+			<div class="row"></div>
+
+		<!--Seqence Data Input Container-->
+
+		<div class="row" id="sequence-file">
+			
+			<div class="col-sm-3"><h3>Sequence data</h3></div>
+		
+		  	<div class="col-sm-3">
+		  		<div> <!--upload sequence data file input and button-->
+		  			
+					<div class="input-append">
+						<label>Upload File</label>
+						<input type="file" name="sequences_file" style="visibility:hidden;" id="sequence-file">
+						<input type="text" name="subfile" id="subfile" class="input-xlarge" placeholder="no file selected"><br/>
+						<a class="btn btn-default" onclick="$('#sequence-file').click();">Browse</a>
+
+							<!--Jquery to show file in input box-->
+							<script type="text/javascript">
+								$('#sequence-file').change(function(){
+								$('#subfile').val($(this).val());
+								}); 
+							</script>
+					</div><br/>
+				</div>
+		  	</div>
+
+		  	<!----Dropbox container-->
+		  	<div id="dropbox-container" class="col-sm-3">
+		  		<div><!--dropbox functions-->
+			   	<script type="text/javascript"> 
+
+			   	
+			   		//Adds Dropbox file choosing functionality
+					var options = {
+
+							// Required. Called when a user selects an item in the Chooser.
+							success: function(files) {
+						    alert("Here's the file link: " + files[0].link)
+						    },
+
+
+						    // Optional. Called when the user closes the dialog without selecting a file
+						    // and does not include any parameters.
+						    cancel: function() { },
+
+						    // Optional. "preview" (default) is a preview link to the document for sharing,
+						    // "direct" is an expiring link to download the contents of the file. For more
+						    // information about link types, see Link types below.
+						    linkType: "direct", // or "preview", 
+
+						   	// Optional. A value of false (default) limits selection to a single file, while
+						    // true enables multiple file selection.
+						    multiselect: false, // or true
+
+
+						    // Optional. This is a list of file extensions. If specified, the user will
+						    // only be able to select files with these extensions. You may also specify
+						    // file types, such as "video" or "images" in the list. For more information,
+						    // see File types below. By default, all extensions are allowed.
+						    extensions: ['.pdf', '.doc', '.docx'],
+						};
+
+
+					var file = {	
+
+					    	// Name of the file.
+						    name: "filename.txt",
+
+						    // URL to access the file, which varies depending on the linkType specified when the
+						    // Chooser was triggered.
+						    link: "https://...",
+
+						    // Size of the file in bytes.
+						    bytes: 464,
+
+						    // URL to a 64x64px icon for the file based on the file's extension.
+						    icon: "https://...",
+
+						    // A thumbnail URL generated when the user selects images and videos.
+						    // If the user didn't select an image or video, no thumbnail will be included.
+						    thumbnailLink: "https://...?bounding_box=75&mode=fit",
+							};
+
+					var button = Dropbox.createChooseButton(options);
+					$("#dropbox-container").append(button); 
+
+
+
+					/*Checks to see if the user's browser is supported. If a user's browser doesn't support the Chooser, we'll gray out the button and show a warning message*/
+					Dropbox.isBrowserSupported();
+				</script> <!--end Dropbox scripts-->
+			</div>
+		</div><!--end dropbox container-->
+	
+
+
+		<!--Sequence File Textbox input-->
+		<div class="row"> </div>
+		<div class="col-md-12">
+			<div class="row"> <span>(or paste sequence data below)</span></div>
+			<div class="row">
+				<div class="input-group input-group-lg"><input type="text" class="form-control" placeholder="Paste Sequence Data Here"> </div>
+	 		</div>
+	 		<div class="row">
+	 		<div class="col-sm-3"> <!--clear button-->
+
+	 			<form method="post" action="create.cgi">	
+	 			<span><div class="btn-clear">
+			  	<button type="button" class="btn btn-default" name="cmd_clear" onclick="document.logoform.sequences.value='';" > Clear</button></div> </span>
+			  </form>
+
+			</div>
+			<div class="col-sm-6"></div>
+			<div class="col-sm-3"> <!--create button-->
+				<form method="post" action="create.cgi">
+				<span><div class="btn-create">
+		 		<button class="btn btn-success btn-lg" type="submit" name="cmd_create"> <span class="glyphicon glyphicon-ok"></span> Create WebLogo</button></div></span>
+		 		</form>
+		 	</div>
+		
+
+
+		<!--Clear Textbox/Create Web Logo Buttons
+			if i set the size of the textbox, will it still be responsive?-->
+		
+
+
+			
+		</div>
+
+		<div class="row"></div>	
+
+		<div class="row">
+			<div class="col-sm-4">Download></div>
+			<div class="col-sm-4"><input type="checkbox" name="download" value="false"></div>
+		
+		</div>
+		
+		<div class="row"></div>	
+
+		<!--Reset defaults must come after create_logo so that hitting enter creates a logo-->  
+		<!--
+		<tr><td>
+		<input type="submit" name="cmd_reset" value="Reset defaults" >
+		</td><td  class="err_msg" rowspan="2">
+		${error_message} &nbsp;
+		</td></tr>
+		<tr><td>&nbsp;</td></tr>
+		-->
+
+		<!--Weblogo Output controls-->
+	
+		<div class="dropdown">
+		<form method="post" action="create.cgi">
+		  <button class="btn btn-default dropdown-toggle" type="submit" id="dropdownMenu1" data-toggle="dropdown"
+		    Output Format
+		    <span class="caret"></span>
+		  </button>
+		 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		    <li value="png" role="menuitem" tabindex="-1" >PNG (low res.)</a></li>
+		    <li value="png_print" role="menuitem" tabindex="-1" >PNG (high res.)</a></li>
+		    <li role="presentation" role="menuitem" tabindex="-1" >JPEG (low res.)</a></li>
+		    <li value="jpeg" role="menuitem" tabindex="-1" >EPS (vector)</a></li>
+		    <li value="pdf" role="menuitem" tabindex="-1" >PDF (vector)</a></li>
+		    <li value="svg"role="menuitem" tabindex="-1" >SVG (vector)</a></li>
+		    <li value="logodata" role="menuitem" tabindex="-1" >Data (plain text)</a></li>
+		</ul>
+	</form>
+		</div>
+
+		<!--OutPut format old
+		<tr><td ${format_err} >
+		Output format </td><td>
+		<select name="format">
+		<option ${png} value="png">PNG (low res.)</option>
+		<option ${png_print} value="png_print">PNG (high res.)</option>
+		<option ${jpeg} value="jpeg">JPEG (low res.)</option>
+		<option ${eps} value="eps">EPS (vector)</option>
+		<option ${pdf} value="pdf">PDF (vector)</option>
+		<option ${svg} value="svg">SVG (vector)</option>
+		<option ${logodata} value="logodata">Data (plain text)</option> 
+		</select> -->
+			<div class="row"></div>	
+				<div class="row" id="logo-size">
+		  			<span>>Logo-size</span>
+		  			<form method="post" action="create.cgi">
+		  				<button class="btn btn-default dropdown-toggle" type="submit" id="Logo-Dropdown" data-toggle="dropdown">Logo Size
+		    	   		<span class="caret"></span>
+		  				</button>
+			 			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+			    			<li value="alphabet_auto"  role="menuitem" tabindex="-1" >small</a></li>
+			    			<li value="alphabet_protein" role="menuitem" tabindex="-1" >medium</a></li>
+			    			<li value="alphabet_dna" role="menuitem" tabindex="-1" >large</a></li>
+			   			</ul>
+		   			</form>
+		  		</div>
+				<div class="row"></div>	
+
+				<!--Logo size old
+				<tr><td ${size_err} >
+				Logo size 
+				</td><td >
+				<select name="stack_width" >
+				<option ${small} >small</option>
+				<option ${medium}>medium</option>
+				<option ${large} >large</option>
+				</select> 
+				-->
+
+
+				<div class="line-stacks"> 
+					<form method="post" action="create.cgi">
+					<span>Stacks per Line</span>
+					<input type="text" name="stacks_per_line" value="${stacks_per_line}"> 
+				
+					</form>
+				</div>
+				<div class="row"></div>	
+
+				<!--
+				<tr><td ${stacks_per_line_err}>
+				    Stacks per line
+				</td><td>
+				<input type="text" name="stacks_per_line" value="${stacks_per_line}" size="4" maxlength="4" >
+				</td></tr>-->
+
+				<form method="post" action="create.cgi">
+				<div class="dropdown">
+				  Sequence Type<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+				    Sequence Type
+				    <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+				    <li value="alphabet_auto"  role="menuitem" tabindex="-1" >Auto</a></li>
+				    <li value="alphabet_protein" role="menuitem" tabindex="-1" >protein</a></li>
+				    <li value="alphabet_dna" role="menuitem" tabindex="-1" >dna</a></li>
+				    <li value="alphabet_rna" role="menuitem" tabindex="-1" >rna</a></li>
+				  </ul>
+				</form>
+
+				<!--Sequence Type old  <tr><td ${alphabet_err}>
+				Sequence type </td><td>
+
+				<select name="alphabet">
+				<option ${alphabet_auto} value="alphabet_auto" >auto</option>
+				<option ${alphabet_protein} value="alphabet_protein">protein</option>
+				<option ${alphabet_dna} value="alphabet_dna">dna</option>
+				<option ${alphabet_rna} value="alphabet_rna">rna</option>
+				</select> 
+				-->
+
+				</div>
+				<div class="row"></div>	
+
+				
+				<div>
+					<form method="post" action="create.cgi">
+					<span>Ignore lower case
+				    <input type="checkbox" name="ignore_lower_case" value="true">
+				    </span>
+				</div>
+				</form>
+				<div class="row"></div>	
+
+
+
+					<!--DropDown Menu for Units-->
+				<form method="post" action="create.cgi">
+				<div class="dropdown">
+				  Units<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuUnits" data-toggle="dropdown">
+				    Units
+				    <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" name="unit_name">
+				    <li role="presentation"><a role="menuitem" tabindex="-1">probability</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1">bits</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1">nats</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1">kT</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1">kJ/mol</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1">kcal/mol</a></li>
+				  </ul>
+				</div>
+				</form>
+
+					<!--Units Data input for create.cgi
+					Units </td><td>
+					<select name="unit_name"  >
+					<option ${probability} >probability</option>
+					<option ${bits} >bits</option>
+					<option ${nats} >nats</option>
+					<option ${kT} >kT</option>
+					<option ${kJ_mol} >kJ/mol</option>
+					<option ${kcal_mol} >kcal/mol</option>
+					</select> 
+					-->
+				<div class="row"></div>	
+
+		 		<form method="post" action="create.cgi">
+				<div>
+					<span>First position number</span>
+				<input  type="text" name="first_index" value="${first_index}" size="4" maxlength="80" >
+				<!--First postion Old
+					${first_index_err}-->
+
+				</div>
+				</form>
+				<div class="row"></div>	
+
+
+
+				<div>
+					<form method="post" action="create.cgi">
+					<span>Logo Range</span>
+						<span> Logo Start</span>
+						<input type="text" name="logo_start" value="${logo_start}" size="4" maxlength="80" > 
+						<span> Logo End</span>
+						<input type="text" name="logo_end"  value="${logo_end}" size="4" maxlength="80" >
+					</form>
+
+					</div>
+					<div class="row"></div>	
+
+					<div class="dropdown">
+						<form method="post" action="create.cgi">
+							<span>Composition</span>
+						  <button class="btn btn-default btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown">
+						    <span>select<span>
+						    <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation" value = "comp_none" >No adjustment for compositio</li>
+						    <li role="presentation" value = "comp_auto"  >auto</li>
+						    <li role="presentation" value = "comp_equiprobable"> equiprobable</li>
+						    <li role="presentation" value="comp_CG"> Percentage> CG &#8658;</li>
+						    <li role="presentation" value="comp_Celegans" >C. elegans (36%)</li>
+
+						    <li role="presentation" value="comp_Dmelanogaster">D. melanogaster (43% (AA default)</li>
+						    <li role="presentation" value="comp_Ecoli" >E. coli (50.5%)</li>
+						    <li role="presentation" value="comp_Hsapiens" >H. sapiens (40%)>Charge (AA)</li>
+						    <li role="presentation" value="comp_Mmusculus" >M. musculus (42%</li>
+						    <li role="presentation" value="comp_Scerevisiae" >S. cerevisiae (38%) (42%</li>
+						  </ul>
+					  </form>
+					</div>
+
+
+					<div>
+						<form method="post" action="create.cgi">			
+						<span>percentCG % CG</span>
+							<input type="text" name="percentCG" value="${percentCG}" size="4" maxlength="8"> 
+
+						</form>
+					</div>
+
+							<div>
+								<form method="post" action="create.cgi">
+								<span>Scale stack widths</span>
+								<input type="checkbox" name="scale_width" value="true" ${scale_width} > 
+								</form>
+							</div>
+
+						<div class="row"></div>	
+
+
+							<div>
+								<form method="post" action="create.cgi">
+								<span>Error bars</span>
+								<input type="checkbox" name="show_errorbars" value="true" ${show_errorbars}  >
+								</form>
+							</div>
+						<div class="row"></div>	
+
+
+							<div>
+								<form method="post" action="create.cgi">
+								<span>Title</span> 
+								<input   type="text"  name="logo_title"  size="52" maxlength="80" value="${logo_title}" > 
+								<!----title old
+									${logo_title_err}> -->
+								</form>
+							</div>
+						<div class="row"></div>	
+
+
+							<div>
+								<form method="post" action="create.cgi">
+								<span>Figure label</span>
+								<input type="text" name="logo_label"  value="${logo_label}" size="4" maxlength="100" > 
+							</form>
+							</div>
+						<div class="row"></div>	
+
+
+							<div>
+								<form method="post" action="create.cgi">
+									<span>X-axis</span>
+									<input type="checkbox" name="show_xaxis" value="true" ${show_xaxis} >
+									<span>Label: </span>
+									<input type="text" name="xaxis_label"  value="${xaxis_label}" size="20" maxlength="100" >  
+								</form>
+							</div>
+						<div class="row"></div>	
+
+
+							<div>
+								<form method="post" action="create.cgi">
+								</span>Y-axis<span>
+								<input type="checkbox" name="show_yaxis" value="true" ${show_yaxis} > 
+								<span>Label: </span>
+								<input type="text" name="yaxis_label" value="${yaxis_label}" size="20" maxlength="32" >  
+								</form>
+							</div>
+						<div class="row"></div>	
+
+
+							<div>
+								<form method="post" action="create.cgi">
+								<span>Y-axis scale:</span>
+								<input type="text" name="yaxis_scale"  value="${yaxis_scale}" size="4" maxlength="100"  > 
+								<!--Y-axis old
+								${yaxis_scale_err} -->
+								</form>
+							</div>		
+						<div class="row"></div>	
+
+							<form method="post" action="create.cgi">
+							<div class="input-group">
+								<span>Y-axis tic spacing:</span>
+							   	<input type="text" name="yaxis_tic_interval" value="${yaxis_tic_interval}" class="form-control" placeholder="Y-axis tic spacing">
+							</form>	
+							</div>
+						<div class="row"></div>	
+
+
+
+					<div>
+						<form method="post" action="create.cgi">
+						<span>Sequence end labels</span>
+						<span>Show Ends</span>
+						<input type="checkbox" name="show_ends" value="true" > 
+						</form>
+					</div>
+					<div class="row"></div>
+
+					<div>
+						<form method="post" action="create.cgi">
+						<span>Version fineprint</span>
+						<input type="checkbox" name="show_fineprint" value="true">
+						</form>					
+					</div>
+					<div class="row"></div>
+
+					<div>
+						<form method="post" action="create.cgi">
+						<div class="dropdown">
+							<span>Color Scheme<span>
+					  		<button class="btn btn-default btn-sm" type="button" id="color-scheme-dropdown" data-toggle="dropdown"><span>select<span><span class="caret"></span></button>
+							  	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							    <li role="presentation"><a role="menuitem" tabindex="-1" value="color_auto">auto</a></li>
+							    <li role="presentation"><a role="menuitem" tabindex="-1" value="color_monochrome" >Monochrome</a></li>
+							    <li role="presentation"><a role="menuitem" tabindex="-1" value="color_base_pairing">Base pairing (NA default)</a></li>
+							    <li role="presentation"><a role="menuitem" tabindex="-1" value="color_classic">Classic</a></li>
+							    <li role="presentation"><a role="menuitem" tabindex="-1" value="color_hydrophobicity">Hydrophobicity (AA default)</a></li>
+							    <li role="presentation"><a role="menuitem" tabindex="-1" value="color_chemistry">Chemistry (AA default)</a></li>
+							    <li role="presentation"><a role="menuitem" tabindex="-1" value="color_charge">">Charge (AA)</a></li>
+							    <li role="presentation"><a role="menuitem" tabindex="-1" value="color_custom">href="#">Custom (Specify)</a></li>
+							  </ul>
+						</form>	 
+						</div>
+					<div class="row"></div>	
+			<!--Color Scheme Data info input for create.cgi
+
+			<!--&nbsp; Color key:
+			<input type="checkbox" name="show_color_key" value="true" ${show_color_key} disabled >
+			-->
+					<form method="post" action="create.cgi">
+					<div class="stacked-textfields" id="Symbols" col-xs-12 .col-sm-6 .col-lg-8>
+						<span>Symbols</span>
+						<input name="symbols0" type="text"  size="16" maxlength="64" value="${symbols0}">
+						<input name="symbols1" type="text"  size="16" maxlength="64" value="${symbols1}">
+						<input name="symbols2" type="text"  size="16" maxlength="64" value="${symbols2}">
+						<input name="symbols3" type="text"  size="16" maxlength="64" value="${symbols3}">
+						<input name="symbols4" type="text"  size="16" maxlength="64" value="${symbols4}">
+					</form >
+					</div>
+					<div class="row"></div>	
+
+					<div class="row">
+						<form method="post" action="create.cgi">
+						<div class="stacked-textfields" id="Colors" col-xs-12 .col-sm-6 .col-lg-8>
+						<span>Color</span> 
+						<input name="color0" type="text"  size="16" maxlength="64"  value="${color0}">
+						<input name="color1" type="text"  size="16" maxlength="64"  value="${color1}">
+						<input name="color2" type="text"  size="16" maxlength="64"  value="${color2}">
+						<input name="color3" type="text"  size="16" maxlength="64"  value="${color3}">
+						<input name="color4" type="text"  size="16" maxlength="64"  value="${color4}">
+					</form>
+				</div>
+
+				<div class="btn-create" .col-md-offset-3>
+					  <span><button class="btn btn-success btn-lg" type="submit" name="cmd_create"> <span class="glyphicon glyphicon-ok"></span> Create WebLogo</button></span>
+				</div>
+				
+				<div class="row"></div>	
+
+				<div class="row" id="dropbox-saver"> <!--dropbox saver button-->
+					<a href="https://dl.dropboxusercontent.com/s/deroi5nwm6u7gdf/advice.png" class="dropbox-saver"></a>
+					<script type="text/javascript">
+						Dropbox.createSaveButton(url, filename);
+
+						var button = Dropbox.createSaveButton(options);
+						$("dropbox-saver").append(button);
+
+					</script>
+				</div>
+
+
+
+	</div><!--End outermost container -->
+
+
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script>
+
+	<script type="text/javascript">
+		var pageTracker = _gat._getTracker("UA-5951066-1");
+		pageTracker._trackPageview(); </script>
+
+	</body>
+</html>

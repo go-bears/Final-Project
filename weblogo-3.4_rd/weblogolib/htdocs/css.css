@@ -1,0 +1,30 @@
+div {
+  border-style: none;
+}
+
+.thumbnail:hover {
+  background-color: rgba(204,204,204,.85);
+
+}
+
+.thumbnail {
+	display: inline-flex;}
+
+#sequence-data {
+	height: 300px
+}
+
+option {
+	font-size: 12px
+}
+h1 {
+	padding: 35px
+}
+
+table: {
+	cell-padding: 5;
+}
+
+div: {
+	border-style: dotted;
+}
