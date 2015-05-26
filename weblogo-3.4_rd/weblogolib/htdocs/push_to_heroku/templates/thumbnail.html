@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WebLogo Create Layout Template</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css.css" >
+
+    <style type="text/css">
+
+        .error { 
+            color: #900;
+            border-left: red solid +4pt;
+        }
+
+        .err_msg { 
+            color: #900;
+        }
+
+    </style>
+
+    <!--jquery libraries-->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+    <!--Dropbox APIs-->
+    <!--================================================== -->
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="iincngjgmknhfxs"> 
+        //this API chooses file from dropbox
+    </script>
+
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="iincngjgmknhfxs">
+      //this API saves files to User's dropbox
+    </script>
+
+  </head>
+
+  <body>
+
+          <!--Navigation-->
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Web Logo 3</a>
+            </div>
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="index.html">home</a></li>
+                <li class="active"gg><a href="create_html_template.html">create</a></li>
+                <li><a href="examples.html">examples</a></li> 
+                <li><a href="manual.html">manual</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div> <!--end Navigation-->
+
+
+        <div class="container-fluid">
+             
+          <div class="row"> <!--outermost row container-->
+
+            <form enctype="multipart/form-data" action="create.cgi" name="logoform" method="post">
+
+              <h1><p class="text-center"> WebLogo 3: Create</p></h1>
+                
+                <div class="col-sm-4"> <!--sequence data, far left column col-sm-4 container-->
+                  <div class="thumbnail">
+                    <h2> Sequence Data:</h2> 
+                    <hr>
+                      <div class="form-group clearfix" >                        
+                          <div class="col-sm-4">                          
+                            <a class="btn btn-default btn-sm" onclick="$('#sequence-file').click();">Browse</a>
+                          </div>
+
+                          <div class="col-sm-8" >                            
+                            <input type="text" class="col-sm-12" name="subfile" id="subfile" placeholder="upload file"> 
+                            <input type="file" name="sequences_file" style="display:none;" id="sequence-file">
+                          </div>
+                      </div> <!--end form-group for file upload buttons-->
+                          
+
+                      <!--Dropbox icon & functionality-->
+
+                      <div id="dropbox-container" class="form-group"></div> <!--dropbox icon appears in this div-->
+
+                        <!--Jquery to show dropbox in id=dropbox-container div-->
+                          <script type="text/javascript">
+                            $('#sequence-file').change(function(){
+                              $('#subfile').val($(this).val());
+                            });                      
+
+                          </script>
+
+                        <!--dropbox functions-->
+                          <script type="text/javascript"> 
+                              
+                              //Adds Dropbox file choosing functionality
+                                var options = {
+
+                                  // Required. Called when a user selects an item in the Chooser.
+                                    success: function(files) {
+                                      alert("Here's the file link: " + files[0].link)
+                                      },
+                                  
+                                  // Optional. Called when the user closes the dialog without selecting a file and does not include any parameters.
+                                    cancel: function() { },
+
+                                  // Optional. "preview" (default) is a preview link to the document for sharing, "direct" is an expiring link to download the contents of the file. For more information about link types, see Link types below.
+                                    linkType: "direct", // or "preview", 
+
+                                  // Optional. A value of false (default) limits selection to a single file, while true enables multiple file selection.
+                                    multiselect: false, // or true
+
+
+                                  // Optional. This is a list of file extensions. If specified, the user will
+                                  // only be able to select files with these extensions. You may also specify
+                                  // file types, such as "video" or "images" in the list. For more information, see File types below. By default, all extensions are allowed.
+                                    extensions: ['.txt', '.rtf'],
+                                
+                                };
+
+                                var file = {  
+                                    
+                                      // Name of the file.
+                                        name: "filename.txt",
+
+                                      // URL to access the file, which varies depending on the linkType specified when the
+                                      // Chooser was triggered.
+                                        link: "https://...",
+
+                                      // Size of the file in bytes.
+                                        bytes: 500,
+
+                                      // URL to a 64x64px icon for the file based on the file's extension.
+                                        icon: "https://...",
+
+                                      // A thumbnail URL generated when the user selects images and videos.
+                                      // If the user didn't select an image or video, no thumbnail will be included.
+                                        thumbnailLink: "https://...?bounding_box=75&mode=fit",
+                                    };
+
+                                var button = Dropbox.createChooseButton(options);
+                                  $("#dropbox-container").append(button); 
+
+                                  /*Checks to see if the user's browser is supported. If a user's browser doesn't support the Chooser, we'll gray out the button and show a warning message*/
+                                
+                                  Dropbox.isBrowserSupported();
+
+                          </script> <!--end Dropbox scripts-->
+
+                      <div class="form-group"> <!--paste seqence data textbox-->
+                        <span ${sequences_err}>
+                          <textarea type="text" class="form-control"  id="sequence-data" name="sequences" style="width:100%" placeholder="Or Paste Sequence Data Here"  >
+                          </textarea>
+                        </span>
+                      </div>
+
+                      <div class="form-group"> <!--row for clear button-->
+                                           
+                          <button type="button" class="btn btn-default" name="cmd_clear" onclick="document.logoform.sequences.value='';" > Clear</button>                      
+                       </div><!-- end row for clear button-->
+                     
+                  </div><!--end thumbnail div-->
+
+                </div> <!--end sequence data, far left column col-sm-4 container-->
+             
+                         
+                
+                <div class="col-sm-8"> <!--weblogo controls right col col-sm-8 container-->
+
+                  <div class="col-sm-4"> <!--start 2nd col-sm-4 div-->
+
+                    <div class="thumbnail"> <!--start 2nd thumbnail column-->
+                        
+                        <div class="form-group">
+                          <form method="post" action="create.cgi">
+                            <span>Title:</span> 
+                            <input type="text" name="logo_title" maxlength="80" placeholder="max 80 char "> 
+                          </form>
+                        </div>
+                          
+                        <div class="form-group clearfix">
+                          <div><span>Output Format:</span></div>
+                          <div>                                            
+                          <select name="format">
+                            <option value="png" >PNG (low res.)</option>
+                            <option value="png_print" >PNG (high res.)</option>
+                            <option role="presentation">JPEG (low res.)</option>
+                            <option value="jpeg" >EPS (vector)</option>
+                            <option value="pdf" >PDF (vector)</option>
+                            <option value="svg" >SVG (vector)</option>
+                            <option value="logodata">Data (plain text)</option>
+                          </select>
+                        </div>
+                        </div>
+
+                        <div class="form-group"> 
+                          <span ${alphabet_err}>Sequence type:</span>                 
+                          <select  name="alphabet">
+                            <option value="alphabet_auto" >auto</option>
+                            <option value="alphabet_protein">protein</option>
+                            <option value="alphabet_dna">dna</option>
+                            <option value="alphabet_rna">rna</option>
+                          </select>   
+                        </div>     
+
+                        <div class="form-group"> 
+                          <span ${size_err} >Logo-size: </span>
+                          <select type="submit" name="stack_width">
+                            <option value="alphabet_auto"  >small</option>
+                            <option value="alphabet_protein" >medium</option>
+                            <option value="alphabet_dna" >large</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group clearfix">
+                          <div>
+                          <span ${stacks_per_line_err} >Stacks per Line:</span>
+                          </div>
+                          <div>
+                            <input type="text" name="stacks_per_line" placeholder="40">
+                          </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <span>Ignore lower case:
+                               <input type="checkbox" name="ignore_lower_case" value="true" checked>
+                            </span>      
+                        </div>
+    
+                        <div class="form-group">
+                          <span>Units: </span>
+                            <select name="unit_name">
+                              <option ${probability} >probability</option>
+                              <option ${bits} >bits</option>
+                              <option ${nats} >nats</option>
+                              <option ${kT} >kT</option>
+                              <option ${kJ_mol} >kJ/mol</option>
+                              <option ${kcal_mol} >kcal/mol</option>
+                            </select> 
+                        </div>
+
+                        <div class="form-group">
+                         <span ${first_index_err}> First position number: </span>
+                         <input  type="text" name="first_index" placeholder="max length 80" maxlength="80" value="${first_index}">
+                        </div>
+
+                        <div class="form-group clearfix">
+                          <span ${logo_range_err} > Logo range: </span>
+                            
+                            <div>
+                              <input type="text" name="logo_start" value="${logo_start}" maxlength="80">
+                              </div> 
+                              - 
+                              <div>
+                              <input type="text" name="logo_end" value="${logo_end}" maxlength="80" >
+                            
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                          <span>Figure label:</span>
+                          <input type="text" name="logo_label" value="${logo_label}" maxlength="100" > 
+                        </div>
+
+                    </div> <!--close 2nd thumbnail column-->
+
+                  </div> <!--close 2nd col-sm-4 div-->
+
+
+                  <div class="col-sm-4"><!--weblogo control 2rd col-sm4 start-->
+
+                      <div class="thumbnail"> <!--third thumbnail group-->
+
+                        <div class="form-group">
+                          <span ${composition_err}>Composition:</span>
+                            <select name="composition" >
+                              <option ${comp_none} value = "comp_none" >No adjustment for composition</option>
+                              <option ${comp_auto} value = "comp_auto" >auto</option>
+                              <option ${comp_equiprobable} value = "comp_equiprobable" >equiprobable</option>
+                              <option ${comp_CG} value="comp_CG" >Percentage CG &#8658;</option>
+                              <option ${comp_Celegans} value="comp_Celegans" >C. elegans (36%) </option>
+                              <option ${comp_Dmelanogaster} value="comp_Dmelanogaster" >D. melanogaster (43%)</option>
+                              <option ${comp_Ecoli} value="comp_Ecoli" >E. coli (50.5%) </option>
+                              <option ${comp_Hsapiens} value="comp_Hsapiens" >H. sapiens (40%) </option>
+                              <option ${comp_Mmusculus}  value="comp_Mmusculus" >M. musculus (42%)</option>
+                              <option ${comp_Scerevisiae} value="comp_Scerevisiae">S. cerevisiae (38%)</option>
+                            </select>
+                          <span>or</span>
+                            <input type="text" name="percentCG" value="${percentCG}" size="4" maxlength="8"   > 
+                          <span> % CG </span>
+                        </div>
+
+                        <div class="form-group">
+                          <span>Scale stack widths: </span>
+                            <input type="checkbox" name="scale_width" value="true" ${scale_width} checked> 
+                        </div>
+
+                        <div class="form-group">
+                          <span>Error bars: </span>                            
+                            <input type="checkbox" name="show_errorbars" value="true" ${show_errorbars}  checked>
+                        </div>
+
+
+                                        
+                        <div class="form-group">
+                          <span>Show Sequence Ends labels:</span>
+                            <input type="checkbox" name="show_ends" value="true">
+                        </div>
+                          
+                        <div class="form-group">
+                          <span>Version fineprint: </span>
+                            <input type="checkbox" name="show_fineprint" value="true" checked>
+                        </div>         
+                            
+                        <div class="form-group">                         
+                          <span>X-axis</span>
+                            <input type="checkbox" name="show_xaxis" value="true" ${show_xaxis} >
+                          <span>Label: </span>
+                            <input type="text" name="xaxis_label"  value="${xaxis_label}" size="20" maxlength="100" >  
+                        </div>
+         
+                        <div class="form-group">
+                          <span>Y-axis</span>
+                            <input type="checkbox" name="show_yaxis" value="true" ${show_yaxis} > 
+                          <span>Label: </span>
+                            <input type="text" name="yaxis_label" value="${yaxis_label}" size="20" maxlength="32" >  
+                        </div>
+
+                        <div class="form-group">
+                          <span>Y-axis scale:</span>
+                            <input type="text" name="yaxis_scale"  value="${yaxis_scale}" size="4" maxlength="100" placeholder="100 character max" > 
+                        </div>
+                         
+                        <div class="form-group">
+                          <span>Y-axis tic spacing:</span>
+                            <input type="text" name="yaxis_tic_interval" value="${yaxis_tic_interval}"  placeholder="Y-axis tic spacing">
+                        </div>
+
+                              
+                      </div> <!--close 3rd thumbnail group-->
+
+                  </div><!--close weblogo control 2rd col-sm4 -->
+                  
+
+                  <div class="col-sm-4"> <!--start weblogo control 3rd col-sm-4-->
+
+                    <div class="thumbnail"><!--start 4th thumbnail group-->
+ 
+                      <div class="form-group">
+                        <span ${color_scheme_err}>Color scheme: </span>                        
+                          <select name="color_scheme"  >
+                            <option ${color_auto} value="color_auto">Auto</option>
+                            <option ${color_monochrome} value="color_monochrome" >Monochrome</option>
+                            <option ${color_base_pairing} value="color_base_pairing">Base pairing (NA default)</option>
+                            <option ${color_classic} value="color_classic">Classic (NA)</option>
+                            <option ${color_hydrophobicity} value="color_hydrophobicity">Hydrophobicity (AA default)</option>
+                            <option ${color_chemistry} value="color_chemistry">Chemistry (AA)</option>
+                            <option ${color_charge} value="color_charge">Charge (AA)</option>
+                            <option ${color_custom} value="color_custom">Custom (Specify below)</option>
+                        </select> 
+
+                          <!--&nbsp; Color key:
+                          <input type="checkbox" name="show_color_key" value="true" ${show_color_key} disabled >
+                        -->
+                      </div>
+                    
+
+                      <div class="form-group stacked-textfields" id="Symbols">
+                        <div>
+                          <span>Symbols:</span>
+                        </div>
+                        <div>
+                            <input name="symbols0" type="text"  maxlength="64" value="${symbols0}">
+                            <input name="symbols1" type="text"  maxlength="64" value="${symbols1}">
+                            <input name="symbols2" type="text"  maxlength="64" value="${symbols2}">
+                            <input name="symbols3" type="text"  maxlength="64" value="${symbols3}">
+                            <input name="symbols4" type="text"  maxlength="64" value="${symbols4}">
+                        </div>
+                      </div>
+
+                      
+                      <div class="form-group stacked-textfields" id="Colors">
+                          <div> <span>Color:</span> </div>
+                          <div>
+                            <input name="color0" type="text" maxlength="64"  value="${color0}">
+                            <input name="color1" type="text" maxlength="64"  value="${color1}">
+                            <input name="color2" type="text" maxlength="64"  value="${color2}">
+                            <input name="color3" type="text" maxlength="64"  value="${color3}">
+                            <input name="color4" type="text" maxlength="64"  value="${color4}">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                        <span>Download</span>
+                          <input type="checkbox" name="download" value="false">
+                      </div>
+
+                      <div class="form-group clearfix">
+                        <button class="btn btn-success btn-md" type="submit" name="cmd_create"> 
+                        <span class="glyphicon glyphicon-ok"></span> Create WebLogo
+                          </button>
+                          <button type="submit" class="btn btn-default btn-sm" name="cmd_reset" value="&    nbsp;Create&nbsp;Logo&nbsp;&nbsp;&nbsp;&nbsp;"> Reset Defaults 
+                          </button>  
+                        </div>
+                    </div> <!--end 4th thumbnail group-->
+
+                  </div><!--start weblogo control 3rd col-sm-4-->
+
+                </div> <!--weblogo controls right col col-sm-8 container-->
+
+
+                <!--Reset defaults must come after create_logo so that hitting enter creates a logo-->  
+            </form>
+
+          </div> <!--end outermost row container-->
+
+        </div> <!--end container-fluid-->
+
+        <script type="text/javascript">
+        $.fn.setAllToMaxHeight = function() {
+          return this.height(Math.max.apply
+            (this, $.map(this.thumbnail(), function(e) { 
+            return $(e).height();
+          })));
+        };
+      </script>
+
+      <!--Google analytics-->
+
+      <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script>
+
+      <script type="text/javascript">
+        var pageTracker = _gat._getTracker("UA-5951066-1");
+        pageTracker._trackPageview(); </script>
+
+
+  </body>
+</html>
+
+
+
